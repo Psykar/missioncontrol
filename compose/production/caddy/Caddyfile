@@ -8,5 +8,7 @@
     log stdout
     errors stdout
     gzip
-    tls {$CADDY_TLS}
+    tls {
+        {$CADDY_DNS} {$CADDY_DNS_PROVIDER}
+    }
 }

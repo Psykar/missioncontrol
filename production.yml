@@ -52,16 +52,24 @@ services:
 
   caddy:
     build:
-      context: .
-      dockerfile: ./compose/production/caddy/Dockerfile
+      context: https://github.com/abiosoft/caddy-docker.git#0.11.5
+      args:
+        - plugins=git,filebrowser,cors,realip,expires,cache,googlecloud
     image: missioncontrol_production_caddy
     depends_on:
       - django
     volumes:
       - production_caddy:/root/.caddy
+      - ./compose/production/caddy/Caddyfile:/etc/Caddyfile
     env_file:
       - ./.envs/.production/.caddy
     ports:
       - "0.0.0.0:80:80"
       - "0.0.0.0:443:443"
     restart: always
+    secrets:
+      - GOOGLE_APPLICATION_CREDENTIALS
+
+secrets:
+  GOOGLE_APPLICATION_CREDENTIALS:
+    file: ./.envs/.production/googlecloud-dns-credentials.json
