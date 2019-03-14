@@ -69,6 +69,10 @@ services:
     restart: always
     secrets:
       - GOOGLE_APPLICATION_CREDENTIALS
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+
 
 secrets:
   GOOGLE_APPLICATION_CREDENTIALS:
